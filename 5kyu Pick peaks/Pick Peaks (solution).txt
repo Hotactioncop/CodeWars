@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+
+PeakData pick_peaks(std::vector<int> v) {
+  PeakData result;
+  if(v.size()==0) return result;
+  int k_pos = 0; // keep position, which could be a peak
+  for (int i = 1; i< v.size()-1; i++)
+  {
+    if(k_pos==0)
+    {
+      if(v[i-1] <v[i] && v[i+1] < v[i])
+      {
+         result.pos.push_back(i);
+         result.peaks.push_back(v[i]);
+      }
+      if(v[i-1] < v[i] && v[i+1] == v[i])
+      {
+        k_pos = i;
+      }
+    }
+    if(k_pos>0)
+    {
+      if(v[i] > v[k_pos])
+      {
+        k_pos = i;
+      }
+      if(v[i] < v[k_pos])
+      {
+        result.pos.push_back(k_pos);
+        result.peaks.push_back(v[k_pos]);
+        k_pos =0;
+      }
+        if (i==v.size()-2 && v[i+ 1] < v[k_pos])
+	    {
+		    result.pos.push_back(k_pos);
+		    result.peaks.push_back(v[k_pos]);
+      }
+    }
+  }
+  return result;
+}

@@ -1,0 +1,40 @@
+#include <sstream>
+#include <algorithm>
+
+
+class RGBToHex
+{
+  public:
+  static std::string rgb(int r, int g, int b);
+};
+
+std::string RGBToHex::rgb(int r, int g, int b)
+{
+  std::vector<std::string> keep(3);
+	int arr[]{ r,g,b };
+	std::string result;
+	std::stringstream s1,s2,s3;
+	s1 << std::hex << r;
+	s1 >> keep[0];
+	s2 << std::hex << g;
+	s2 >> keep[1];
+	s3 << std::hex << b;
+	s3 >> keep[2];
+	for (int i = 0; i< 3; i++)
+	{
+		if (arr[i] <0)
+		{
+			result = result + "00";
+		}
+		else if (arr[i] > 255)
+		{
+			result = result + "FF";
+		}
+		else if (keep[i].size() == 1)
+			result = result + '0' + keep[i];
+		else
+			result = result + keep[i];
+	}
+  std::transform(begin(result), end(result), begin(result), toupper);
+	return result;
+}
