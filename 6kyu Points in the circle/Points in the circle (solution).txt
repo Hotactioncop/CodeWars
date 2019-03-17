@@ -1,0 +1,17 @@
+#include <cmath>
+static int pointsNumber(int radius)
+{
+  int n = 0;
+  for (float i = 1; i<=radius; i++)
+  {
+    for (float j = 1; j<=radius; j++)
+    {
+      if (std::sqrt(i*i+j*j)<=radius)
+      {
+        ++n;
+      }
+    }
+  }
+  n = (n+radius)*4+1;
+  return n ;
+}

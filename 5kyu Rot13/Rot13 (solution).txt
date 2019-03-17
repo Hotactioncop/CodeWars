@@ -1,0 +1,26 @@
+#include <string>
+using namespace std;
+
+string rot13(string msg)
+{
+  char*ptr = &msg[0];
+	std::string result;
+	int n;
+	while (*ptr != '\0')
+	{
+		if (*ptr >= 'A' && *ptr <= 'Z')
+		{
+			n = ((int)*ptr + 13) % 91;
+			result += (char)(n < 65) ? n + 65 : n;
+		}
+		else if (*ptr >= 'a' && *ptr <= 'z')
+		{
+			n = ((int)*ptr + 13) % 123;
+			result += (char)(n<97)?n+97:n;
+		}
+		else
+			result += *ptr;
+		++ptr;
+	}
+	return result;
+}

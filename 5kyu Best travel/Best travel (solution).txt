@@ -1,0 +1,36 @@
+class BestTravel
+{
+public:
+    static int chooseBestSum(int t, int k, std::vector<int>& ls);
+    static void BestSum(int t, int k, std::vector<int> ls, int num, std::vector<int>&result,int j);
+};
+
+void BestTravel::BestSum(int t, int k, std::vector<int> ls, int num, std::vector<int>&result,int j)
+{
+  --k;
+	for (int i =j; i<ls.size(); i++)
+	{
+		int n = num + ls[i];
+		if (k > 0)
+		{
+			BestSum(t, k, ls, n, result, i+1);
+		}
+		else
+			if (n <= t && k == 0)
+		{
+			result.push_back(n);
+		}
+	}
+}
+int BestTravel::chooseBestSum(int t, int k, std::vector<int>& ls)
+{
+  if (ls.size() < k) return -1;
+	std::vector<int> _copy = ls;
+	std::vector<int> result;
+	for (int i = 0; i < _copy.size(); i++)
+	{
+		BestSum(t, k, _copy, 0, result, i);
+	}
+	if (result.size() == 0) return -1;
+	return *std::max_element(result.begin(), result.end());
+}
