@@ -1,0 +1,62 @@
+#include <set>
+#include <tuple>
+class Rank
+{
+public:
+    static std::string nthRank(const std::string &st, std::vector<int> &we, int n)
+    {
+    if (st == "") return "No participants";
+	  if (n > we.size()) return "Not enough participants";
+	std::vector<std::string> str(we.size());
+	std::vector<int> str_size(we.size());
+
+	char*ptr = const_cast<char*>(&st[0]);
+	int i = 0;
+	while (*ptr != '\0')
+	{
+		if (*ptr == ',')
+		{
+			++ptr;
+			++i;
+		}
+		str[i] += *ptr;
+		if (*ptr >= 'a')
+			str_size[i] += (*ptr - 96);
+		else
+			str_size[i] += (*ptr - 64);
+		++ptr;
+	}
+
+	for (i = 0; i < we.size(); i++)
+	{
+		str_size[i] = (str_size[i] + str[i].size())*(we[i]);
+	}
+	std::multiset<std::tuple<int, std::string>> res;
+	for (i = 0; i < str.size(); i++)
+	{
+		res.insert(make_tuple(str_size[i], str[i]));
+	}
+	std::vector<std::tuple<int, std::string>> result;
+	for (auto x = rbegin(res); x!=rend(res); x++)
+	{
+		result.push_back(*x);
+	}
+	for (int i = 0; i < result.size(); i++)
+	{
+		for (int j = 0; j < result.size()-1; j++)
+		{
+			if (std::get<0>(result[j]) == std::get<0>((result[j + 1])))
+			{
+				if(std::get<1>(result[j]) > std::get<1>(result[j+1]))
+					result[j].swap(result[j + 1]);
+			}
+		}
+	}
+  auto x = begin(result);
+	for (i = 1; i<n; i++)
+	{
+		++x;
+	}
+	return std::get<1>(*x);
+}
+ };

@@ -1,0 +1,16 @@
+#include <cmath>
+bool narcissistic( int value ){
+  int keep = value;
+	std::vector<int> res((int)log10(value) + 1);
+	for (int i = 0; i < ((int)log10(value) + 1); i++)
+	{
+		res[i] = pow(keep % 10, ((int)log10(value) + 1));
+		keep /= 10;
+	}
+	int ass = 0;
+	for (auto x : res)
+	{
+		ass += x;
+	}
+	return(ass == value);
+}

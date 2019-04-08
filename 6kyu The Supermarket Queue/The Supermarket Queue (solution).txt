@@ -1,0 +1,12 @@
+#include <algorithm>
+long queueTime(std::vector<int> customers,int n){
+  if (customers.size() == 0) return 0;
+	std::vector<int> time(n);
+	for (auto x : customers)
+	{
+		auto it = min_element(time.begin(), time.end());
+		*it += x;
+
+	}
+	return *max_element(time.begin(), time.end());
+}
